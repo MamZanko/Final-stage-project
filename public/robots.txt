@@ -1,0 +1,34 @@
+# KarBazar — Robots.txt
+# https://karbazar.com
+
+User-agent: *
+Allow: /
+
+# Disallow private/authenticated areas
+Disallow: /admin
+Disallow: /admin/
+Disallow: /settings
+Disallow: /orders
+Disallow: /orders/
+Disallow: /messages
+Disallow: /messages/
+Disallow: /reviews
+Disallow: /favorites
+Disallow: /my-gigs
+Disallow: /gigs/create
+Disallow: /gigs/*/edit
+Disallow: /business/orders
+Disallow: /business/messages
+Disallow: /business/reviews
+Disallow: /business/settings
+Disallow: /business/portfolio
+Disallow: /forgot-password
+Disallow: /reset-password
+
+# Auth pages — no need to index
+Disallow: /login
+Disallow: /signup
+Disallow: /register
+
+# Sitemap location
+Sitemap: https://karbazar.com/sitemap.xml

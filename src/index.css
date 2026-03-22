@@ -1,0 +1,275 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   KarBazar CSS Custom Properties (Section 9.2)
+   ============================================ */
+:root {
+  /* Light Mode (default) */
+  --color-bg: #F3F4F6;
+  --color-card: #FFFFFF;
+  --color-card-bg: #FFFFFF;
+  --color-surface: #F9FAFB;
+  --color-border: #E5E7EB;
+  --color-text: #1F2937;
+  --color-text-muted: #6B7280;
+  --color-text-secondary: #6B7280;
+  --color-primary: #2563EB;
+  --color-secondary: #F97316;
+  --color-discount: #DC2626;
+  --color-success: #10B981;
+  --color-error: #EF4444;
+
+  /* Brand Colors (Section 1.3) */
+  --color-primary-blue: #2563EB;
+  --color-secondary-orange: #F97316;
+  --color-discount-red: #DC2626;
+  --color-success-green: #10B981;
+  --color-error-red: #EF4444;
+  --color-gold: #F59E0B;
+  --color-purple-verified: #7C3AED;
+
+  /* Font families */
+  --font-heading: 'Poppins', 'Inter', sans-serif;
+  --font-body: 'Open Sans', 'Inter', sans-serif;
+  --font-button: 'Inter', sans-serif;
+}
+
+/* Dark Mode Custom Properties */
+.dark {
+  --color-bg: #111827;
+  --color-card: #1F2937;
+  --color-card-bg: #1F2937;
+  --color-surface: #374151;
+  --color-border: #374151;
+  --color-text: #F9FAFB;
+  --color-text-muted: #9CA3AF;
+  --color-text-secondary: #9CA3AF;
+  --color-primary: #3B82F6;
+  --color-secondary: #FB923C;
+  --color-discount: #F87171;
+  --color-success: #34D399;
+  --color-error: #F87171;
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color 300ms ease, color 300ms ease;
+  min-height: 100vh;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Smooth focus outlines for accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+  transition: outline-offset 150ms ease;
+}
+
+/* Selection color */
+::selection {
+  background: var(--color-primary);
+  color: white;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+/* ============================================
+   Smooth Color Transitions for Theme Toggle
+   ============================================ */
+body,
+.transition-theme {
+  transition: background-color 300ms ease, color 300ms ease, border-color 300ms ease, box-shadow 300ms ease;
+}
+
+/* ============================================
+   Skeleton Loader (Section 8.9)
+   ============================================ */
+@layer components {
+  .skeleton {
+    @apply relative overflow-hidden rounded-lg;
+    background: linear-gradient(90deg,
+      var(--color-surface) 25%,
+      var(--color-border) 50%,
+      var(--color-surface) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+    will-change: background-position;
+  }
+
+  /* Card hover effect (Section 8.3) */
+  .card-hover {
+    @apply transition-all duration-300;
+    transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+    contain: layout style;
+    will-change: transform;
+  }
+  .card-hover:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px -8px rgb(0 0 0 / 0.12), 0 8px 16px -4px rgb(0 0 0 / 0.08);
+  }
+
+  /* Button base animations (Section 8.4) */
+  .btn-animated {
+    @apply transition-all duration-200;
+    transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+  .btn-animated:hover {
+    transform: scale(1.03);
+  }
+  .btn-animated:active {
+    transform: scale(0.97);
+    transition-duration: 100ms;
+  }
+
+  /* Button variants */
+  .btn-primary {
+    @apply btn-animated px-6 py-2.5 bg-primary text-white font-button font-semibold rounded-lg;
+  }
+  .btn-primary:hover {
+    @apply bg-primary-dark;
+    transform: scale(1.02);
+  }
+
+  .btn-secondary {
+    @apply btn-animated px-6 py-2.5 bg-secondary text-white font-button font-semibold rounded-lg;
+  }
+
+  .btn-outlined {
+    @apply btn-animated px-6 py-2.5 border-2 border-primary text-primary font-button font-semibold rounded-lg bg-transparent;
+  }
+  .btn-outlined:hover {
+    @apply bg-primary/5;
+    transform: scale(1.02);
+  }
+
+  .btn-ghost {
+    @apply btn-animated px-4 py-2 text-gray-text font-button rounded-lg bg-transparent;
+  }
+  .btn-ghost:hover {
+    @apply bg-gray-100 dark:bg-gray-800;
+  }
+
+  .btn-danger {
+    @apply btn-animated px-6 py-2.5 bg-error text-white font-button font-semibold rounded-lg;
+  }
+
+  /* Nav link underline animation (Section 8.6) */
+  .nav-link {
+    @apply relative py-1;
+  }
+  .nav-link::after {
+    content: '';
+    @apply absolute bottom-0 left-0 h-0.5 bg-primary;
+    width: 0;
+    transition: width 250ms cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    width: 100%;
+  }
+
+  /* Discount badge pulse (Section 8.10) */
+  .discount-badge {
+    @apply inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold text-white;
+    background-color: var(--color-discount-red);
+  }
+
+  /* Progress bar for toast */
+  .toast-progress {
+    @apply absolute bottom-0 left-0 h-1 rounded-b;
+    animation: drain 4s linear forwards;
+  }
+
+  /* Scrollbar styling */
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+  }
+
+  /* Smooth link transitions globally */
+  a {
+    transition: color 200ms ease, opacity 200ms ease;
+  }
+
+  /* Smooth image transitions */
+  img {
+    transition: opacity 300ms ease;
+  }
+
+  /* GPU acceleration hint for animated elements */
+  [class*="animate-"],
+  [class*="transition-"] {
+    backface-visibility: hidden;
+  }
+}
+
+/* ============================================
+   Reduced Motion (Section 8.1)
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================
+   Infinite horizontal scroll carousel
+   ============================================ */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.3333%);
+  }
+}
+
+.animate-scroll-left {
+  animation: scroll-left 25s linear infinite;
+}
+
+.animate-scroll-left:hover {
+  animation-play-state: paused;
+}
+
+/* Deals strip marquee (slower for larger cards) */
+.animate-scroll-left-deals {
+  animation: scroll-left 40s linear infinite;
+}
+
+.animate-scroll-left-deals:hover {
+  animation-play-state: paused;
+}
